@@ -1,29 +1,19 @@
 #include <iostream>
-#define uint unsigned int
 
-static int getTerm(uint number, uint termCount)
-{
-    if (number == 1)
-        return termCount+1;
-    else if (number % 2 == 0)
-        getTerm(number/2, termCount+1);
-    else
-        getTerm(3*number+1, termCount+1);
-}
+/*
+    Binomial coefficients and Pascal's triangle from grade 12!
+    C(40, 20) or "40 choose 20"
+    40!/(20!(40-20)!) = (40*39*...*21)/20!
+*/
+
 int main()
 {
-    uint count = 0, highCount = 0, highNum = 0;
-    for (uint num = 3; num < 1000000; num += 2)
+    unsigned long long pathCount = 1;
+    const int step = 40; // always 40 steps total
+    for (double i = 0; i < 20; i++)
     {
-        count = getTerm(num, count);
-        if (count > highCount)
-        {
-            highCount = count;
-            highNum = num;
-        }
-        count = 0;
+        pathCount *= step - i; // for (40*39*...*21)
+        pathCount /= i + 1; // for 20!
     }
-    std::cout << highNum << std::endl;
+    std::cout << std::fixed << pathCount << std::endl;
 }
-
-// Output to console: 837799
